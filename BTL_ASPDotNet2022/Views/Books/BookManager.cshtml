@@ -1,0 +1,63 @@
+﻿@model BTL_ASPDotNet2022.Models.BookFilter;
+
+@{
+    ViewData["Title"] = "Book managerment";
+    Layout = "_AdminLayout";
+}
+
+<h1>Book managerment:</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<hr />
+<fieldset>
+    <legend>Filter:</legend>
+    <form action="BookManager" method="get">
+        Book name: <input type="text" asp-for="SearchString" />
+
+        <input class="btn btn-success" type="submit" value="Filter" />
+    </form>
+</fieldset>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].ImageSrc)
+            </th>
+            <th>Some detail:</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Books) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                <img class="img-thumbnail" src="@Url.Content(item.ImageSrc)" height="200" width="150" />
+            </td>
+            <td>
+                <div><strong>@Html.DisplayNameFor(model => model.Books[0].Name)</strong> @Html.DisplayFor(modelItem => item.Name)</div>
+                <br>
+                <div><strong>@Html.DisplayNameFor(model => model.Books[0].Price)</strong> @Html.DisplayFor(modelItem => item.Price)</div>
+                <br>
+                <div><strong>@Html.DisplayNameFor(model => model.Books[0].InventoryQuantity)</strong> @Html.DisplayFor(modelItem => item.InventoryQuantity)</div>
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

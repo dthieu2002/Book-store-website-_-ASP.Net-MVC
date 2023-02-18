@@ -1,0 +1,249 @@
+﻿@inject IHttpContextAccessor _contextAccessor;
+@using BTL_ASPDotNet2022.Models;
+@using BTL_ASPDotNet2022.Extensions;
+
+@{
+    var UsernameLogin = _contextAccessor.HttpContext.Session.GetString("UsernameLogin");
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>DTH Book Store - @ViewData["Title"]</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/Hidayah/assets/img/favicon.png" rel="icon">
+    <link href="~/Hidayah/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Search box icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/Hidayah/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/Hidayah/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/Hidayah/assets/css/style.css" rel="stylesheet">
+    <link href="@Url.Content("~/Hidayah/assets/css/thuanhieu.css")" rel="stylesheet" />
+
+    <!-- JS sweet alert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- =======================================================
+    * Template Name: Hidayah - v4.9.1
+    * Template URL: https://bootstrapmade.com/hidayah-free-simple-html-template-for-corporate/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== --> 
+
+</head>
+
+<body>
+    <!-- Sweet alert (Get in session) -->
+    @{
+        var sweetAlert = _contextAccessor.HttpContext.Session.Get<SweetAlert>("SweetAlert");
+        if(sweetAlert != null){
+            <script>swal('@sweetAlert.Title', '@sweetAlert.Message', '@sweetAlert.Type')</script>
+
+            _contextAccessor.HttpContext.Session.Remove("SweetAlert");
+        }
+    }
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top header-inner-pages">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+
+            <h1 class="logo">
+                <a asp-controller="DTHBookStore" asp-action="Index">DTH_Book_Store</a>
+            </h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            
+            <!--Search box-->
+            <form class="search-box" action="/DTHBookStore/Search" method="get">
+                <input class="search-txt" type="text" name="SearchString" placeholder="Enter book, Author ...">
+                <a class="search-btn">
+                    <i class="fas fa-search"></i>
+                </a>
+            </form>
+
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" asp-controller="DTHBookStore" asp-action="Index">Home</a></li>
+                  
+                    <li><a class="nav-link scrollto" asp-controller="DTHBookStore" asp-action="Bookcase">Bookcase</a></li>
+
+                    <li><a class="nav-link scrollto" asp-controller="DTHBookStore" asp-action="Contact">Contact</a></li>
+
+                    <!--Sign in-->
+                    @if(UsernameLogin is null){
+                        <li><a class="nav-link scrollto" asp-controller="DTHBookStore" asp-action="SignIn">Sign in</a></li>
+                    }
+                    else{
+                        <li class="dropdown">
+                            <a class="dropdown-toggle">
+                                <img src="~/Hidayah/assets/img/icons8-account-32.png">
+                                <span>@UsernameLogin</span>
+                            </a>
+                            <ul>
+                                <li><a href="/DTHBookStore/ViewAccountInfo/@UsernameLogin">View account info</a></li>
+                                <li><a asp-controller="Accounts" asp-action="OrderHistory">History purchase</a></li>
+                                <li><a asp-controller="DTHBookStore" asp-action="Logout">Log out</a></li>
+                            </ul>
+                        </li>
+                    }
+                    
+                    <li><a class="nav-link scrollto" asp-controller="Carts" asp-action="Index">
+                            <img src="~/Hidayah/assets/img/icons8-shopping-cart-32.png" />
+                        </a>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+        
+    </header><!-- End Header -->
+    <div style=" background-color:black; height:85px; "></div>
+
+    
+
+    <!-- Body -->
+    <div class="container" style="padding:30px">
+        @RenderBody()
+    </div>
+    
+    
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>Our Newsletter</h4>
+                        <p>...</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Subscribe">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-6 footer-links">
+                                <h4>Useful Links</h4>
+                                <ul>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 footer-links">
+                                <h4>Our Services</h4>
+                                <ul>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                                    <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 footer-contact">
+                                <h4>Contact Us</h4>
+                                <p>
+                                    Đường Y - Trâu Quỳ <br>
+                                    Gia Lâm - Hà Nội<br>
+                                    VIỆT NAM <br><br>
+                                    <strong>Phone:</strong> +84.964.837.511<br>
+                                    <strong>Email:</strong> hieuhieu1234231000@gmail.com<br>
+                                </p>
+
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 footer-info">
+                                <h3>About DTH_book_store</h3>
+                                <p>We are still trying to get a successful company and develop further.</p>
+
+                                <!--Social media link-->
+                                <div class="social-links mt-3">
+                                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                <strong>Thank you for use services of my company!</strong>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/hidayah-free-simple-html-template-for-corporate/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/Hidayah/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/Hidayah/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Hidayah/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/Hidayah/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/Hidayah/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/Hidayah/assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="~/Hidayah/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Jquery library CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/Hidayah/assets/js/main.js"></script>
+    <script src="~/Hidayah/assets/js/thuanhieu.js"></script>
+
+
+    <!-- Script of CRUD -->
+    @await RenderSectionAsync("Scripts", required: false);
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+﻿@model BTL_ASPDotNet2022.Models.AccountFilter;
+@*model IEnumerable<BTL_ASPDotNet2022.Models.Account>*@
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+        </span> Accounts manager: 
+    </h3>
+</div>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-danger">
+        <span class="menu-title">Add new account</span>
+        &nbsp;&nbsp;
+        <i class="mdi mdi-account-plus menu-icon"></i>
+    </a>
+</p>
+
+<hr />
+
+<!--Search box and filter box-->
+<form class="form-control" method="get" asp-controller="Accounts" asp-action="Index">
+    Username: <input type="text" asp-for="SearchString" placeholder="Enter username..." />
+    
+    | Type of user: <select asp-for="RoleFilter" asp-items="Model.Roles">
+        <option value="">All</option>
+    </select>
+
+    <input type="submit" class="btn btn-info" value="Filter" />
+</form>
+
+
+<table class="table table-striped" style="margin: 20px;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].FullName)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Accounts) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Username">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Username">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Username">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

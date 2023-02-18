@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<BTL_ASPDotNet2022.Models.Cart_Item>
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>My cart:</h1>
+
+<table class="table table-striped" style="padding:20px">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.ImageSrc)
+            </th>
+            <th>Detail:</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int totalQuantity = 0;
+            decimal totalPrice = 0;
+        }
+
+        @foreach (var item in Model)
+        {
+            totalQuantity += item.Quantity;
+            totalPrice += item.Book.Price * item.Quantity;
+            var totalItem = item.Book.Price * item.Quantity;
+
+            <tr>
+                <td>
+                    <a href="Books/Details/@item.Book.Id">
+                        <img src="@item.Book.ImageSrc" height="250" width="200" />
+                    </a>
+                </td>
+                <td>
+                    <p><strong>@Html.DisplayNameFor(model => model.Book.Name)</strong> @Html.DisplayFor(modelItem => item.Book.Name)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Book.Gender)</strong> @Html.DisplayFor(modelItem => item.Book.Gender)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Book.Page)</strong> @Html.DisplayFor(modelItem => item.Book.Page)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Book.Author)</strong> @Html.DisplayFor(modelItem => item.Book.Author)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Book.ReleaseDate)</strong> @Html.DisplayFor(modelItem => item.Book.ReleaseDate)</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    $@totalItem
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Book.Id">Remove</a>
+                </td>
+            </tr>
+        }
+
+        <!--Sum of book quantity, total price-->
+        <tr>
+            <td colspan="2"></td>
+            <th>Total:</th>
+            <th>@totalQuantity</th>
+            <th>$@totalPrice</th>
+            <td>
+                @if (Model.Count() > 0)
+                {
+                    <a class="btn btn-success" asp-controller="Carts" asp-action="Order">
+                        Order
+                    </a>
+                }
+            </td>
+        </tr>
+        
+    </tbody>
+</table>

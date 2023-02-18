@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model BTL_ASPDotNet2022.Models.Account
+
+@{
+    ViewData["Title"] = "Sign in";
+}
+<style>
+    label{
+        text-align:left;
+    }
+</style>
+
+<div class="container">
+    <form asp-controller="Accounts" asp-action="CheckSignIn" style="padding:30px">
+        <h1 id="header_title">Login as Existing Customer</h1>
+
+        <div>
+            <label for="Username" class="form-label">Username</label>
+            <input 
+                type="text" id="Username" class="form-control" name="Username" autofocus required
+            />
+            <br />
+        </div>
+        <div>
+            <label for="Username" class="form-label" >Password</label>
+            <input type="Password" id="Password" class="form-control" name="Password" required/>
+            <br />
+        </div>
+        <div>
+            <input type="submit" class="btn btn-success" value="Sign In" /><br /><br />
+        </div>
+        <div>
+            Or <a asp-controller="DTHBookStore" asp-action="Register">Create a new acount</a> | <a asp-controller="DTHBookStore" asp-action="ForgotPassword">Forgot Password</a>
+        </div>
+
+    </form>
+</div>
+

@@ -1,0 +1,45 @@
+﻿@model BTL_ASPDotNet2022.Models.BookcaseFilter;
+
+@{
+    ViewData["Title"] = "Bookcase";
+}
+
+<h1>Bookcase:</h1>
+<br />
+<hr />
+<form asp-action="Bookcase" method="get">
+    <h2>Filter:</h2>
+
+    Book genre: <select asp-for="BookTitleFilter" asp-items="Model.BookTitleList">
+                    <option value="">All</option>
+                </select>
+    
+    &nbsp;&nbsp;<input class="btn btn-success" type="submit" value="Filter" />
+
+</form>
+<hr />
+<br />
+
+<!-- Render book follow title-->
+@foreach (var title in Model.BookTitleRenderList)
+{
+    <div class="my-book-wrapper container">
+        <!-- Header-->
+        <h3 class="book-wrapper-header">@title:</h3>
+
+        <!-- List book-->
+        <div align="center">
+            <div class="book-wrapper">
+                @foreach (var item in Model.BookList)
+                {
+                    if (item.Gender.ToLower().Contains(@title.ToLower()))
+                    {
+                        <a class="book-cell" href="/Books/Details/@item.Id">
+                            <img class="book-img" src="@item.ImageSrc" />
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

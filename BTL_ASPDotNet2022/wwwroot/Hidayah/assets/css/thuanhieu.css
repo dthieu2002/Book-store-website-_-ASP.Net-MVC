@@ -1,0 +1,141 @@
+﻿#header_title{
+    color: green;
+    font-size: 40px;
+    padding: 20px 0px;
+}
+
+
+/*
+select, input[type="button"], input[type="password"], input[type="date"] {
+    width: 280px;
+}
+*/
+
+
+/*=== CSS to show book list horizontal ===*/
+.my-book-wrapper{
+    padding: 20px 40px;
+    border: 1px solid violet;
+}
+
+.book-wrapper-header{
+    font-size: 30px;
+    font-weight: bold;
+    color: violet;
+    background-color: black;
+    padding: 15px 30px;
+}
+
+.book-wrapper {
+    display: flex;
+    padding: 10px 20px;
+    overflow-x: auto;
+    width: 90%;
+}
+
+.book-cell{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.book-item {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.book-cell:hover{
+    background-color: blueviolet;
+}
+
+/*My responsive ( hieu chinh chieu cao va chieu rong cua anh)*/
+.book-img{
+    padding: 10px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+@media screen and (min-width: 500px) {
+    .book-img {
+        height: 400px;
+        width: 300px; 
+    }
+}
+@media screen and (min-width: 900px) {
+    .book-img {
+        height: 350px;
+        width: 250px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .book-img {
+        height: 300px;
+        width: 200px;
+    }
+}
+
+
+
+/* Css search box*/
+.search-box {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%,-50%);
+    background: #2f3640;
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.search-box:hover > .search-txt {
+    width: 240px;
+    padding: 0 6px;
+    top: 50px;
+}
+
+.search-box:hover > .search-btn {
+    background: white;
+}
+
+.search-btn {
+    color: #e84118;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    text-decoration: none;
+}
+
+.search-txt {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+}
+
+
+
+/*Order*/
+.waiting{
+    color: darkgray;
+}
+
+.accept{
+    color: green;
+}
+
+.refuse{
+    color: red;
+}
+

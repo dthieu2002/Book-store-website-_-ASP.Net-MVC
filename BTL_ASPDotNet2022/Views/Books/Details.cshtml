@@ -1,0 +1,106 @@
+﻿@inject IHttpContextAccessor _contextAccessor;
+
+@model BTL_ASPDotNet2022.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+
+    //=== Change layout if not customer ===
+    if(_contextAccessor != null){
+        if (_contextAccessor.HttpContext.Session.GetString("RoleLogin") != null)
+        {
+            if (!_contextAccessor.HttpContext.Session.GetString("RoleLogin").Equals("customer"))
+            {
+                Layout = "_AdminLayout";
+            }
+        }
+    }
+
+    var RoleLogin = _contextAccessor.HttpContext!.Session.GetString("RoleLogin");
+}
+<style>
+    dt, dd{
+        padding: 5px;   
+    }
+</style>
+
+<hr />
+<div>
+    <h1>@Model.Name</h1>
+    <h5>- @Model.Author -</h5>
+    <hr />
+
+    <div class="row">
+        <!--Img-->
+        <div class="col-sm-4">
+            <img class="container" src="@Url.Content(Model.ImageSrc)" />
+        </div>
+
+        <!--Info-->
+        <div class="col-sm-8">
+            <dl class="row">
+                <dt class="col-xs-6 col-sm-4">
+                    @Html.DisplayNameFor(model => model.Gender)
+                </dt>
+                <dd class="col-xs-6 col-sm-8">
+                    @Html.DisplayFor(model => model.Gender)
+                </dd>
+                <dt class="col-xs-6 col-sm-4">
+                    @Html.DisplayNameFor(model => model.Page)
+                </dt>
+                <dd class="col-xs-6 col-sm-8">
+                    @Html.DisplayFor(model => model.Page)
+                </dd>
+                <dt class="col-xs-6 col-sm-4">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd class="col-xs-6 col-sm-8">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt class="col-xs-6 col-sm-4">
+                    @Html.DisplayNameFor(model => model.ReleaseDate)
+                </dt>
+                <dd class="col-xs-6 col-sm-8">
+                    @Html.DisplayFor(model => model.ReleaseDate)
+                </dd>
+                
+                <!--Display Inventory quantity and Button if is 'master' or 'staff'-->
+                @if (RoleLogin == "master" || RoleLogin == "staff")
+                {
+                    <dt class="col-xs-6 col-sm-4">
+                        @Html.DisplayNameFor(model => model.InventoryQuantity)
+                    </dt>
+                    <dd class="col-xs-6 col-sm-8">
+                        @Html.DisplayFor(model => model.InventoryQuantity)
+                    </dd>
+
+                    <dt class="col-xs-6 col-sm-6">
+                        <a class="btn btn-info" asp-controller="Books" asp-action="Edit" asp-route-id="@Model.Id">
+                            Edit book info
+                        </a>
+                    </dt>
+                    <dt class="col-xs-6 col-sm-6">
+                        <a class="btn btn-danger" asp-controller="Books" asp-action="Delete" asp-route-id="@Model.Id">
+                            Delete book
+                        </a>
+                    </dt>
+                }
+                else{
+                    <dt class="col-xs-6 col-sm-6">
+                        <a class="btn btn-danger" asp-controller="Carts" asp-action="Add" asp-route-id="@Model.Id">
+                            Add to cart
+                        </a>
+                    </dt>
+                    <dd class="col-xs-6 col-sm-6">
+                        <a class="btn btn-primary" asp-controller="DTHBookStore" asp-action="Index">
+                            Back to home
+                        </a>
+                    </dd>
+                }
+            </dl>
+        </div>
+        
+    </div>
+    
+</div>
+

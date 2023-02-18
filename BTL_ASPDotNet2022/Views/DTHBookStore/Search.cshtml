@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BTL_ASPDotNet2022.Models.Book>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Result for: @ViewBag.SearchString</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageSrc)
+            </th>
+            <th>Book info:</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id">
+                    <img src = "@Url.Content(item.ImageSrc)" height="250" width="200">
+                </a>
+            </td>
+            <td>
+                <p><strong>@Html.DisplayNameFor(model => model.Name)</strong> @Html.DisplayFor(modelItem => item.Name)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.Gender)</strong> @Html.DisplayFor(modelItem => item.Gender)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.Author)</strong> @Html.DisplayFor(modelItem => item.Author)</p>
+                <p><strong>@Html.DisplayNameFor(model => model.Price)</strong> @Html.DisplayFor(modelItem => item.Price)</p>
+          
+                <!-- Button -->
+                <a asp-controller="Carts" asp-action="Add" asp-route-id="@item.Id" class="btn btn-danger">
+                    Add to cart
+                </a>
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">
+                    More details
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    #register_form{
+        padding: 0px 40px;
+    }
+</style>
+
+<div id="register_form">
+    <form action="/Accounts/CheckRegister" style="padding:50px 0px; margin:50px" method="post">
+        <h1 id="header_title">Register New Account:</h1>
+        <fieldset>
+            <legend>Account info:</legend>
+            <div>
+                <label for="Username">Username:</label><br />
+                <input type="text" id="Username" name="Username" required /><br /><br />
+            </div>
+            <div>
+                <label for="Password">Password:</label><br />
+                <input type="Password" id="Password" name="Password" required /><br /><br />
+            </div>
+        </fieldset><br />
+        
+        <fieldset>
+            <legend>Personal info:</legend>
+            <div>
+                <label for="FullName">Full name:</label><br />
+                <input type="text" id="FullName" name="FullName" required /><br /><br />
+            </div>
+            <div>
+                <label for="BirthDay">BirthDay:</label><br />
+                <input type="date" id="BirthDay" name="BirthDay" required /><br /><br />
+            </div>
+            <div>
+                <label for="Gender">Gender:</label><br />
+                <select name="Gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select><br /><br />
+            </div> 
+            <div>
+                <label for="Address">Address:</label><br />
+                <input type="text" id="Address" name="Address" required /><br /><br />
+            </div>
+            <div>
+                <label for="Phone">Phone:</label><br />
+                <input type="text" id="Phone" name="Phone" required /><br /><br />
+            </div>
+
+            <input type="hidden" name="Role" value="customer" />
+        </fieldset><br />
+
+        <!--Show error-->
+        <span style="color: red;">@TempData["Error"]</span>
+
+        <div>
+            <input type="submit" value="Register" />
+        </div><br /><br />
+        <div>
+            Or <a asp-controller="DTHBookStore" asp-action="SignIn">Back to sign in</a> | <a asp-controller="DTHBookStore" asp-action="Index">Go home screen</a>
+        </div>
+
+
+
+    </form>
+</div>
+
+
